@@ -21,5 +21,5 @@
     #define VERSION_TRAMPOLINE 27
 
     // For device-specific fixes. Use letters, the version will then be like "12a"
-    #define VERSION_DEV_FIX ""
+    #define VERSION_DEV_FIX "x"
 #endif
