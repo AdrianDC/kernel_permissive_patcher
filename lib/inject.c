@@ -36,7 +36,7 @@
 #endif
 
 #define TMP_RD_UNPACKED_DIR "/mrom_rd"
-#define TMP_RD2_UNPACKED_DIR TMP_RD_UNPACKED_DIR"/sbin"
+#define TMP_RD2_UNPACKED_DIR TMP_RD_UNPACKED_DIR"/second"
 #define TMP_RD2 TMP_RD2_UNPACKED_DIR"/ramdisk.cpio"
 
 static int get_img_trampoline_ver(struct bootimg *img)
