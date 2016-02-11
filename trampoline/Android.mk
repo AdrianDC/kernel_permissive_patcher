@@ -26,6 +26,11 @@ LOCAL_CFLAGS += -DPRODUCT_MODEL="\"$(PRODUCT_MODEL)\"" -DPRODUCT_MANUFACTURER="\
 # to find fstab
 LOCAL_CFLAGS += -DTARGET_DEVICE="\"$(TARGET_DEVICE)\""
 
+# also add /dev/block/bootdevice symlinks
+ifeq ($(MR_DEV_BLOCK_BOOTDEVICE),true)
+    LOCAL_CFLAGS += -DMR_DEV_BLOCK_BOOTDEVICE
+endif
+
 ifneq ($(MR_DEVICE_HOOKS),)
 ifeq ($(MR_DEVICE_HOOKS_VER),)
     $(info MR_DEVICE_HOOKS is set but MR_DEVICE_HOOKS_VER is not specified!)
