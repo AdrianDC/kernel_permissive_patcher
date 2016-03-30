@@ -75,8 +75,8 @@ static int copy_rd_files(UNUSED const char *path, UNUSED const char *busybox_pat
 
         remove(TMP_RD2_UNPACKED_DIR "/sbin/ueventd");
         remove(TMP_RD2_UNPACKED_DIR "/sbin/watchdogd");
-        symlink(TMP_RD2_UNPACKED_DIR "/main_init", TMP_RD2_UNPACKED_DIR "/sbin/ueventd");
-        symlink(TMP_RD2_UNPACKED_DIR "/main_init", TMP_RD2_UNPACKED_DIR "/sbin/watchdogd");
+        symlink("../main_init", TMP_RD2_UNPACKED_DIR "/sbin/ueventd");
+        symlink("../main_init", TMP_RD2_UNPACKED_DIR "/sbin/watchdogd");
 
 #ifdef MR_USE_MROM_FSTAB
         snprintf(buf, sizeof(buf), "%s/mrom.fstab", mrom_dir());
@@ -89,8 +89,8 @@ static int copy_rd_files(UNUSED const char *path, UNUSED const char *busybox_pat
 
         remove(TMP_RD_UNPACKED_DIR "/sbin/ueventd");
         remove(TMP_RD_UNPACKED_DIR "/sbin/watchdogd");
-        symlink(TMP_RD_UNPACKED_DIR "/main_init", TMP_RD_UNPACKED_DIR "/sbin/ueventd");
-        symlink(TMP_RD_UNPACKED_DIR "/main_init", TMP_RD_UNPACKED_DIR "/sbin/watchdogd");
+        symlink("../main_init", TMP_RD_UNPACKED_DIR "/sbin/ueventd");
+        symlink("../main_init", TMP_RD_UNPACKED_DIR "/sbin/watchdogd");
 
 #ifdef MR_USE_MROM_FSTAB
         snprintf(buf, sizeof(buf), "%s/mrom.fstab", mrom_dir());
