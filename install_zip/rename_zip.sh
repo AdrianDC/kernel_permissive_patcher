@@ -22,7 +22,7 @@ ver_dev="$(cat $VERSION_H | grep VERSION_DEV_FIX)"
 ver_dev=${ver_dev#*define VERSION_DEV_FIX \"}
 ver_dev=${ver_dev%\"}
 
-out_name="${ZIP_PATH}-$(date +%Y%m%d)-v${ver_main}${ver_dev}-UNOFFICIAL-${DEVICE}.zip"
+out_name="${ZIP_PATH}-$(date -u +%Y%m%d)-v${ver_main}${ver_dev}-UNOFFICIAL-${DEVICE}.zip"
 echo "--- Creating $out_name"
 cp -a "$ZIP_PATH.zip" "$out_name" || exit 1
 cd "$(dirname ${out_name})" && md5sum "$(basename ${out_name})" > "${out_name}.md5sum"
