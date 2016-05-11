@@ -832,7 +832,7 @@ int multirom_default_status(struct multirom_status *s)
     s->current_rom = NULL;
     s->roms = NULL;
 #ifdef MR_ALLOW_NKK71_NOKEXEC_WORKAROUND
-    s->allow_nkk71_nokexec = NO_KEXEC_DISABLED;
+    s->allow_nkk71_nokexec = NO_KEXEC_ALLOWED;
 #endif
     s->colors = 0;
     s->brightness = MULTIROM_DEFAULT_BRIGHTNESS;
