@@ -36,6 +36,7 @@
 #endif
 
 #define TMP_RD_UNPACKED_DIR "/mrom_rd"
+#define TMP_RD_INIT_REAL TMP_RD_UNPACKED_DIR "/init.real"
 #define TMP_RD2 TMP_RD_UNPACKED_DIR "/sbin/ramdisk.cpio"
 #define TMP_RD2_UNPACKED_DIR TMP_RD_UNPACKED_DIR "/second"
 
@@ -50,20 +51,28 @@ static int get_img_trampoline_ver(struct bootimg *img)
 static int copy_rd_files(UNUSED const char *path, UNUSED const char *busybox_path)
 {
     char buf[256];
+    char init_file[64];
     const int *secRD = access(TMP_RD2, F_OK);
 
+    if (secRD != -1) {
+        snprintf(init_file, sizeof(init_file), TMP_RD2_UNPACKED_DIR "/init");
+    } else if (access(TMP_RD_INIT_REAL, F_OK) != -1) {
+        snprintf(init_file, sizeof(init_file), TMP_RD_INIT_REAL);
+    } else {
+        snprintf(init_file, sizeof(init_file), TMP_RD_UNPACKED_DIR "/init");
+    }
+
     if ((secRD != -1 && access(TMP_RD2_UNPACKED_DIR "/main_init", F_OK) < 0 &&
-            rename(TMP_RD2_UNPACKED_DIR "/init", TMP_RD2_UNPACKED_DIR "/main_init")) ||
+            rename(init_file, TMP_RD2_UNPACKED_DIR "/main_init")) ||
             (secRD == -1 && access(TMP_RD_UNPACKED_DIR "/main_init", F_OK) < 0 &&
-            rename(TMP_RD_UNPACKED_DIR "/init", TMP_RD_UNPACKED_DIR "/main_init") < 0))
+            rename(init_file, TMP_RD_UNPACKED_DIR "/main_init") < 0))
     {
         ERROR("Failed to move /init to /main_init!\n");
         return -1;
     }
 
     snprintf(buf, sizeof(buf), "%s/trampoline", mrom_dir());
-    if ((secRD != -1 && copy_file(buf, TMP_RD2_UNPACKED_DIR "/init") < 0) ||
-            (secRD == -1 && copy_file(buf, TMP_RD_UNPACKED_DIR "/init") < 0))
+    if (copy_file(buf, init_file) < 0)
     {
         ERROR("Failed to copy trampoline to /init!\n");
         return -1;
@@ -71,7 +80,7 @@ static int copy_rd_files(UNUSED const char *path, UNUSED const char *busybox_pat
 
     if (secRD != -1)
     {
-        chmod(TMP_RD2_UNPACKED_DIR "/init", 0750);
+        chmod(init_file, 0750);
 
         remove(TMP_RD2_UNPACKED_DIR "/sbin/ueventd");
         remove(TMP_RD2_UNPACKED_DIR "/sbin/watchdogd");
@@ -85,7 +94,7 @@ static int copy_rd_files(UNUSED const char *path, UNUSED const char *busybox_pat
         remove(TMP_RD2_UNPACKED_DIR "/mrom.fstab");
 #endif
     } else {
-        chmod(TMP_RD_UNPACKED_DIR "/init", 0750);
+        chmod(init_file, 0750);
 
         remove(TMP_RD_UNPACKED_DIR "/sbin/ueventd");
         remove(TMP_RD_UNPACKED_DIR "/sbin/watchdogd");
