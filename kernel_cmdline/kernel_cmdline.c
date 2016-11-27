@@ -65,7 +65,7 @@ int kernel_cmdline(const char *kernel_path, const char *cmd_append, char debug)
             ++cmdline_write;
             if (img.is_elf)
             {
-                img.hdr_elf->cmd_size += 1;
+                img.hdr_info->cmdline_size += 1;
             }
         }
 
@@ -73,7 +73,7 @@ int kernel_cmdline(const char *kernel_path, const char *cmd_append, char debug)
         cmdline_write[cmd_append_size] = 0x00;
         if (img.is_elf)
         {
-            img.hdr_elf->cmd_size += cmd_append_size;
+            img.hdr_info->cmdline_size += cmd_append_size;
         }
 
         if (debug)
