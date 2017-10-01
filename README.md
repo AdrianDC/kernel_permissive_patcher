@@ -1,6 +1,10 @@
 # Kernel Permissive Patcher for Android
  * <b>[See the project on XDA](http://forum.xda-developers.com/-/-/-t3506338)</b>
 
+## Downloads
+ * Kernel Permissive Patcher: [kernel_permissive_patcher.zip](release/kernel_permissive_patcher.zip)
+ * Kernel Selinux Verbose Audit: [kernel_selinuxaudit_patcher.zip](release/kernel_selinuxaudit_patcher.zip)
+
 ## How the project works and what it does
  * Appends the permissive command to the kernel
     installed on the device without other changes
