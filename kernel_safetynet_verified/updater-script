@@ -1,0 +1,29 @@
+ui_print(" ");
+ui_print(" ");
+ui_print(" ==============================");
+ui_print(" | SafetyNet Verified Patcher |");
+ui_print(" |      Adrian DC - 2019      |");
+ui_print(" ==============================");
+ui_print(" ");
+
+show_progress(1.000000, 0);
+ui_print("  - Extracting the script files...");
+package_extract_dir("scripts", "/tmp/");
+set_perm(0, 0, 0777, "/tmp/kernel_cmdline");
+set_perm(0, 0, 0777, "/tmp/kernel_safetynet.sh");
+
+set_progress(0.330000);
+ui_print("  - Patching the kernel SafetyNet...");
+assert(run_program("/tmp/kernel_safetynet.sh") == 0);
+
+set_progress(0.660000);
+ui_print("  - Cleaning temporary files...");
+delete("/tmp/kernel_cmdline");
+delete("/tmp/kernel_safetynet.sh");
+
+unmount("/system");
+set_progress(1.000000);
+ui_print(" ");
+ui_print("  Patch completed!");
+ui_print(" ");
+
